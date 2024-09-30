@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector> 
+
+std::string grow_odd(std::string s, int i){
+  std::string odd_s;
+  odd_s += s[i];
+  int left = 1;
+  while (i+left<s.size() && i-left >=0){
+    std::string l;
+    std::string r;
+    l= s[i-left];
+    r = s[i+left];
+    if (l==r){
+      odd_s = l+odd_s+r;
+      left++;
+    }
+    else{
+      break;
+    }
+  }
+  return odd_s;
+}
+
+std::string grow_even(std::string s, int i){
+  if (i<1 || s[i]!=s[i-1]){
+    return "";
+  }
+  std::string even_s;
+  even_s += s[i];
+  even_s += s[i];
+  int left = 1;
+  while (i+left<s.size() && i-left >0){
+    std::string l;
+    std::string r;
+    l= s[i-left-1];
+    r = s[i+left];
+    if (l==r){
+      even_s = l+even_s+r;
+      left++;
+    }
+    else{
+      break;
+    }
+  }
+  return even_s;
+}
+
+
+
+std::string longestPalin (std::string s){
+  std::vector<std::string> w(s.size());
+  for (auto i=0; i<s.size();++i) {
+    std::string even_s= grow_even(s,i);
+    std::string odd_s = grow_odd(s,i);
+    if (even_s.size()>=odd_s.size()){
+      w[i] = even_s;
+    }
+    else{
+      w[i] = odd_s;
+    }
+  }
+  std::string solution;
+  int max_l = w[0].size();
+  for (auto a:w){
+    std::cout << a << std::endl;
+    if (a.size()>max_l){
+      max_l=a.size();
+      solution = a;
+    }
+  }
+  return solution;
+}
+  
+
+
+int main(){
+  std::string s = "abcdedcfghhgf";
+  std::cout << longestPalin(s) << std::endl;
+}

@@ -1,0 +1,93 @@
+#include <iostream>
+#include <vector>
+
+
+std::vector<std::vector<bool>> operator_req_t(char a) {
+  std::vector<std::vector<bool>> solution;
+
+  if (a == '&') {
+    solution.push_back({true, true});
+  } 
+  else if (a == '|') {
+    solution.push_back({true, true});
+    solution.push_back({true, false});
+    solution.push_back({false, true});
+  } 
+  else {
+    solution.push_back({true, false});
+    solution.push_back({false, true});
+  }
+  return solution;
+}
+
+    
+    
+    
+    
+std::vector<std::vector<bool>> operator_req_f(char a){
+  std::vector<std::vector<bool>> solution;
+  if (a=='&'){
+    std::vector<bool> v = {false,false};
+    solution.push_back(v);
+    std::vector<bool> v1 = {true,false};
+    solution.push_back(v1);
+    v1 = {false,true};
+    solution.push_back(v1);
+  }
+  else if (a=='|'){
+    std::vector<bool> v1 = {false,false};
+    solution.push_back(v1);
+  }
+  else {
+    std::vector<bool> v1 = {true,true};
+    solution.push_back(v1);
+    v1 = {false,false};
+    solution.push_back(v1);
+  }
+  return solution;
+}
+    
+    
+    
+    
+    
+    
+int countWays(int n, std::string s){
+  int size = n/2+1;
+  std::vector<std::vector<std::vector<int>>> table(size,std::vector<std::vector<int>>(size,std::vector<int>(2)));
+  for (auto i=0; i<size;++i){
+    if (s[2*i]=='T'){
+      table[0][i][1] = 1;
+      table[0][i][0]=0;
+    }
+    else{
+      table[0][i][1] = 0;
+      table[0][i][0]=1;
+    }
+  }
+  for (auto i=1;i<size;++i){
+    for (auto j=0; j<size-i;++j){
+      table[i][j][0]=0;
+      table[i][j][1]=0;
+      for (auto k=0; k<i; k++){
+	char op = s[2*(j+k)+1];
+	for (auto s: operator_req_t(op)){
+	  table[i][j][1] += table[k][j][s[0]]*table[i-k-1][j+k+1][s[1]];
+	}
+	for (auto s: operator_req_f(op)){
+	  table[i][j][0] += table[k][j][s[0]]*table[i-k-1][j+k+1][s[1]];
+	}
+      }
+    }
+  }
+  return table[size-1][0][1];
+}
+
+
+
+int main(){
+  std::string s = "T^F|F^T^T|F&F|F|F|F|F|F|F|F|F|F|F|F|F|F|F";
+  int n = s.size();
+  std::cout << countWays(n,s) << std::endl;
+  return 0;
+}

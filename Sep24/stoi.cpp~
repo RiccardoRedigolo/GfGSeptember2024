@@ -1,0 +1,13 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int atoi(std::string s) {
+  return 75;
+}
+
+int main(){
+  std::cout<< "YYY" << std::endl;
+  std::cout << atoi("a") << std::endl;
+  return 0;
+}

@@ -1,0 +1,12 @@
+#include <iostream>
+
+
+int wtf(std::string s){
+  return 2;
+}
+
+
+int main(){
+  std::cout << wtf("abc") << std::endl;
+  return 0;
+}

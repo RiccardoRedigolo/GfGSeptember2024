@@ -1,0 +1,10 @@
+#include <iostream>
+
+int main(){
+  bool f = false;
+  bool t = true;
+  int u = t;
+  int v = f;
+  std::cout << u << " " << v << std::endl;
+  return 0;
+}

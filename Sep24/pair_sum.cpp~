@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+
+
+bool check_sum(std::vector<int>& v, int sum) {
+  int min = *std::min_element(v.begin(), v.end());
+  int max = *std::max_element(v.begin(),v.end());
+  if (sum-min<min || sum > 2*max) {
+    return false;
+  }
+  int interval = max-min+1;
+  std::vector<bool> table(interval);
+  for (auto i = 0; i<interval; ++i) {
+    table[i] = false;
+  }
+  for (int a:v) {
+    if (a+min <=sum && a+max >= sum) {
+      table[a-sum+max] = true;
+    }
+  }
+  for (int a:v) {
+    if (table[max-a]){
+      std::cout << a;
+      std::cout << a-sum;
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+int main(){
+  std::vector<int> v = {1,14,-12,7,19,87,137283,191,2};
+  int sum = 3;
+  if (check_sum(v,sum)) {
+    std::cout << "YEEEEEEE" << std::endl;
+  }
+  return 0;
+}
+  
+  

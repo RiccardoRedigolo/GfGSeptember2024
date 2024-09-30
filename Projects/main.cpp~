@@ -1,0 +1,7 @@
+#include "Calendar.hpp"
+
+
+int main(){
+  Calendar Hotel_Almar("Almar");
+  return 0;
+}
